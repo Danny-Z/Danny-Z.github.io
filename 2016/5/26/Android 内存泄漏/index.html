@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Hello World｜Danny.Z&#39;s blog
+        Android 内存泄漏和检测｜Danny.Z&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://danny-z.github.io/2016/5/26/hello-world/">
+    <link rel="canonical" href="http://danny-z.github.io/2016/5/26/Android 内存泄漏/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -144,9 +144,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Hello World</h1>
-                    
-                    <h2 class="subheading">subtitle</h2>
+                    <h1>Android 内存泄漏和检测</h1>
                     
                     <span class="meta">
                          作者 Danny.Z
@@ -156,8 +154,8 @@
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#Demo"
-                           title="Demo">Demo</a>
+                        <a class="tag" href="/tags/#Android"
+                           title="Android">Android</a>
                         
                     </div>
                 </div>
@@ -166,7 +164,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Hello World
+            Android 内存泄漏和检测
         </span>
     </div>
 </header>
@@ -177,26 +175,26 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+                <h1 id="Android-内存泄漏和检测"><a href="#Android-内存泄漏和检测" class="headerlink" title="Android 内存泄漏和检测"></a>Android 内存泄漏和检测</h1><p>首先我们知道Java有GC的保护不会出现C/C++那样传统意义上的内存泄漏, 但是在Android上, 如果一些组件在Activity销毁时没有及时被清理掉, 这就可以被看作为内存泄漏了</p>
+<h2 id="常见的场景"><a href="#常见的场景" class="headerlink" title="常见的场景"></a>常见的场景</h2><h3 id="1-静态属性"><a href="#1-静态属性" class="headerlink" title="1. 静态属性"></a>1. 静态属性</h3><p>非Application的Context, Activity, View 等作为类的静态属性</p>
+<h3 id="2-内部类-和匿名内部类"><a href="#2-内部类-和匿名内部类" class="headerlink" title="2. 内部类(和匿名内部类)"></a>2. 内部类(和匿名内部类)</h3><p>内部类持有外部类实例的引用, 如果在外部持有这个Android组件的内部类引用时, 就比较容易出现泄漏了, 如一些回调, onClick 等等</p>
+<h3 id="3-一些异步逻辑"><a href="#3-一些异步逻辑" class="headerlink" title="3. 一些异步逻辑"></a>3. 一些异步逻辑</h3><p>Thread Handler Timer 等异步执行的逻辑, 如果传递了View Activity 等引用, 这个异步逻辑很有可能很久才执行, 这就造成了内存浪费或泄漏</p>
+<h3 id="4-资源对象没有关闭，比如"><a href="#4-资源对象没有关闭，比如" class="headerlink" title="4. 资源对象没有关闭，比如"></a>4. 资源对象没有关闭，比如</h3><p>数据库, I/O, Bitmap</p>
+<h2 id="一些检测方法和工具"><a href="#一些检测方法和工具" class="headerlink" title="一些检测方法和工具"></a>一些检测方法和工具</h2><h3 id="DDMS"><a href="#DDMS" class="headerlink" title="DDMS"></a>DDMS</h3><h3 id="MAT"><a href="#MAT" class="headerlink" title="MAT"></a>MAT</h3><p><a href="http://www.eclipse.org/mat/" target="_blank" rel="external">Memory Analyzer (MAT)</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Use the Memory Analyzer to analyze productive heap dumps with hundreds of millions of objects, quickly calculate the retained sizes of objects, see who is preventing the Garbage Collector from collecting objects, run a report to automatically extract leak suspects.</div></pre></td></tr></table></figure></p>
+<p><img src="http://www.eclipse.org/mat/about/histogram.png" alt=""></p>
+<h3 id="LeakCanary"><a href="#LeakCanary" class="headerlink" title="LeakCanary"></a>LeakCanary</h3><p>大名鼎鼎的Square 开源项目 <a href="https://github.com/square/leakcanary" target="_blank" rel="external">LeakCanary</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">A memory leak detection library for Android and Java.</div><div class="line"></div><div class="line">“A small leak will sink a great ship.” - Benjamin Franklin</div></pre></td></tr></table></figure></p>
+<p><img src="https://github.com/square/leakcanary/raw/master/assets/screenshot.png" alt=""></p>
 
                 <hr>
                 
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2016/5/26/hello-world/"
-                     data-title="Hello World"
-                     data-url="http://danny-z.github.io/2016/5/26/hello-world/"
-                     data-images="http://danny-z.github.io/2016/5/26/hello-world/http://www.wallcoo.com/animal/Dogs_Summer_and_Winter/wallpapers/1920x1200/DogsB10_Lucy.jpg"
-                     data-content="Welcome to Hexo! This is your very first post. ... | Danny.Z&#39;s blog ">
+                     data-thread-key="2016/5/26/Android 内存泄漏/"
+                     data-title="Android 内存泄漏和检测"
+                     data-url="http://danny-z.github.io/2016/5/26/Android 内存泄漏/"
+                     data-images="http://danny-z.github.io/2016/5/26/Android 内存泄漏/http://www.wallcoo.com/animal/Dogs_Summer_and_Winter/wallpapers/1920x1200/DogsB10_Lucy.jpg"
+                     data-content="Android 内存泄漏和检测首先我们知道Java有GC的保护不会出现C/C++那样传统意义上... | Danny.Z&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -215,14 +213,14 @@
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2016/5/26/Activity 详细生命周期图/" data-toggle="tooltip" data-placement="top"
-                           title="Activity 详细生命周期图">&larr; Previous Post</a>
+                        <a href="/2016/5/26/adb install apk Segmentation fault/" data-toggle="tooltip" data-placement="top"
+                           title="Adb Install Apk Segmentation Fault">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2016/5/26/adb install apk Segmentation fault/" data-toggle="tooltip" data-placement="top"
-                           title="Adb Install Apk Segmentation Fault">Next Post &rarr;</a>
+                        <a href="/2016/5/26/Bitmap Config/" data-toggle="tooltip" data-placement="top"
+                           title="Bitmap Config">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -231,9 +229,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2016/5/26/hello-world/"
-                         data-title="Hello World"
-                         data-url="http://danny-z.github.io/2016/5/26/hello-world/">
+                         data-thread-key="2016/5/26/Android 内存泄漏/"
+                         data-title="Android 内存泄漏和检测"
+                         data-url="http://danny-z.github.io/2016/5/26/Android 内存泄漏/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -245,7 +243,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android-内存泄漏和检测"><span class="toc-text">Android 内存泄漏和检测</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#常见的场景"><span class="toc-text">常见的场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-静态属性"><span class="toc-text">1. 静态属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-内部类-和匿名内部类"><span class="toc-text">2. 内部类(和匿名内部类)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-一些异步逻辑"><span class="toc-text">3. 一些异步逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-资源对象没有关闭，比如"><span class="toc-text">4. 资源对象没有关闭，比如</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一些检测方法和工具"><span class="toc-text">一些检测方法和工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DDMS"><span class="toc-text">DDMS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MAT"><span class="toc-text">MAT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LeakCanary"><span class="toc-text">LeakCanary</span></a></li></ol></li></ol></li></ol>
                 </div>
             </div>
         </div>
@@ -267,8 +265,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#Demo"
-                           title="Demo">Demo</a>
+                        <a class="tag" href="/tags/#Android"
+                           title="Android">Android</a>
                         
                     </div>
                 </section>
