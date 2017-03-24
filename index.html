@@ -273,9 +273,9 @@
 
 <div class="post-preview  "
      style="background-image: url('http://www.wallcoo.com/animal/Dogs_Summer_and_Winter/wallpapers/1920x1200/DogsB10_Lucy.jpg')">
-    <a href="/2016/5/26/Android 内存泄漏/">
+    <a href="/2016/5/26/Bitmap Config/">
         <h2 class="post-title">
-            Android 内存泄漏和检测
+            Bitmap Config
         </h2>
         <p class="post-meta">
             <i class="fa fa-calendar" aria-hidden="true"></i> 2016-05-26
@@ -283,8 +283,8 @@
         
         <div class="post-content-preview">
             <p>
-                Android 内存泄漏和检测首先我们知道Java有GC的保护不会出现C/C++那样传统意义上的内存泄漏, 但是在Android上, 如果一些组件在Activity销毁时没有及时被清理掉, 这就可以被看作为内存泄漏了
-常见的场景1. 静态属性非Application的Context, Activ..
+                ARGB_8888/RGB_565/ALPHA_8/ARGB_4444ARGB_8888：分别用8位来记录4个值，所以每个像素会占用32位。ARGB_4444：分别用4位来记录4个值，所以每个像素会占用16位。内存占用减少一半，但是每个值图片失真度很严重，这个参数本身已经不推荐使用了。
+RGB_..
             </p>
         </div>
     </a>
@@ -309,57 +309,6 @@
             <p>
                 Activity 详细生命周期图
 
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview  "
-     style="background-image: url('http://www.wallcoo.com/animal/Dogs_Summer_and_Winter/wallpapers/1920x1200/DogsB10_Lucy.jpg')">
-    <a href="/2016/5/26/adb install apk Segmentation fault/">
-        <h2 class="post-title">
-            Adb Install Apk Segmentation Fault
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-05-26
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                adb install apk Segmentation fault
-[100%] /data/local/tmp/åä¸ºå¹³å°çå®è£åSegmentation fault
-
-发现是apk的中文文件名的问题,尴尬啊~ 有些手机就可以
-
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview  "
-     style="background-image: url('http://www.wallcoo.com/animal/Dogs_Summer_and_Winter/wallpapers/1920x1200/DogsB10_Lucy.jpg')">
-    <a href="/2016/5/26/Bitmap Config/">
-        <h2 class="post-title">
-            Bitmap Config
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-05-26
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                ARGB_8888/RGB_565/ALPHA_8/ARGB_4444ARGB_8888：分别用8位来记录4个值，所以每个像素会占用32位。ARGB_4444：分别用4位来记录4个值，所以每个像素会占用16位。内存占用减少一半，但是每个值图片失真度很严重，这个参数本身已经不推荐使用了。
-RGB_..
             </p>
         </div>
     </a>
@@ -397,6 +346,57 @@ AlertDialog
 工厂模式
 BitmapFactory
 
+
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview  "
+     style="background-image: url('http://www.wallcoo.com/animal/Dogs_Summer_and_Winter/wallpapers/1920x1200/DogsB10_Lucy.jpg')">
+    <a href="/2016/5/26/Android 内存泄漏/">
+        <h2 class="post-title">
+            Android 内存泄漏和检测
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-05-26
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                Android 内存泄漏和检测首先我们知道Java有GC的保护不会出现C/C++那样传统意义上的内存泄漏, 但是在Android上, 如果一些组件在Activity销毁时没有及时被清理掉, 这就可以被看作为内存泄漏了
+常见的场景1. 静态属性非Application的Context, Activ..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+<div class="post-preview  "
+     style="background-image: url('http://www.wallcoo.com/animal/Dogs_Summer_and_Winter/wallpapers/1920x1200/DogsB10_Lucy.jpg')">
+    <a href="/2016/5/26/adb install apk Segmentation fault/">
+        <h2 class="post-title">
+            Adb Install Apk Segmentation Fault
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-05-26
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                adb install apk Segmentation fault
+[100%] /data/local/tmp/åä¸ºå¹³å°çå®è£åSegmentation fault
+
+发现是apk的中文文件名的问题,尴尬啊~ 有些手机就可以
 
             </p>
         </div>
